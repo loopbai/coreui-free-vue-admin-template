@@ -78,7 +78,7 @@ export default new Router({
       children: [
         {
           path: 'mails',
-          name: 'mails',
+          name: 'Mails',
           component: Mails
         },
         {
