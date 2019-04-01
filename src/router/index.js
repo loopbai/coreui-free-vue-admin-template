@@ -58,6 +58,11 @@ const Register = () => import('@/views/pages/Register')
 const Users = () => import('@/views/users/Users')
 const User = () => import('@/views/users/User')
 
+// System
+const Mails = () => import('@/customization/mails')
+const SysLogin = () => import('@/customization/Login')
+const SysRegister = () => import('@/customization/Register')
+
 Vue.use(Router)
 
 export default new Router({
@@ -71,6 +76,11 @@ export default new Router({
       name: 'Home',
       component: DefaultContainer,
       children: [
+        {
+          path: 'mails',
+          name: 'mails',
+          component: Mails
+        },
         {
           path: 'dashboard',
           name: 'Dashboard',
@@ -329,6 +339,36 @@ export default new Router({
           path: 'register',
           name: 'Register',
           component: Register
+        }
+      ]
+    },
+    {
+      path: '/system',
+      redirect: '/system/404',
+      name: 'System',
+      component: {
+        render (c) { return c('router-view') }
+      },
+      children: [
+        {
+          path: '404',
+          name: 'Page404',
+          component: Page404
+        },
+        {
+          path: '500',
+          name: 'Page500',
+          component: Page500
+        },
+        {
+          path: 'login',
+          name: 'Login',
+          component: SysLogin
+        },
+        {
+          path: 'register',
+          name: 'Register',
+          component: SysRegister
         }
       ]
     }
