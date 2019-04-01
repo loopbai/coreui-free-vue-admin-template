@@ -6,6 +6,8 @@ import 'core-js/es7/array'
 // import cssVars from 'css-vars-ponyfill'
 import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 import App from './App'
 import router from './router'
 
@@ -13,6 +15,7 @@ import router from './router'
 // cssVars()
 
 Vue.use(BootstrapVue)
+Vue.use(VueAxios, axios)
 
 /* eslint-disable no-new */
 new Vue({
