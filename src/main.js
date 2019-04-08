@@ -7,6 +7,7 @@ import 'core-js/es7/array'
 import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 import axios from 'axios'
+import VueCookie from 'vue-cookie'
 import VueAxios from 'vue-axios'
 import App from './App'
 import router from './router'
@@ -15,6 +16,7 @@ import router from './router'
 // cssVars()
 
 Vue.use(BootstrapVue)
+Vue.use(VueCookie)
 Vue.use(VueAxios, axios)
 
 /* eslint-disable no-new */
