@@ -19,6 +19,14 @@ Vue.use(BootstrapVue)
 Vue.use(VueCookie)
 Vue.use(VueAxios, axios)
 
+Vue.prototype.apiRequest = axios.create({
+  baseURL: process.env.VUE_APP_API_GATEWAY
+})
+const token = localStorage.getItem('token')
+if (token) {
+  Vue.prototype.apiRequest.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+}
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
