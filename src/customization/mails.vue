@@ -11,6 +11,7 @@
 
 <script>
 import cTable from '@/views/base/Table.vue'
+import router from '../router'
 
 export default {
   name: 'tables',
@@ -37,7 +38,10 @@ export default {
       });
       this.itemsArray = maillist
     }).catch(error => {
-      console.log(error)
+      if (error.response.status === 401) {
+        console.log(error.response.data)
+        router.push({ path: "system/login" });
+      }
     })
   }
 }
