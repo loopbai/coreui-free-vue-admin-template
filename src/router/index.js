@@ -59,7 +59,7 @@ const Users = () => import('@/views/users/Users')
 const User = () => import('@/views/users/User')
 
 // System
-const Mails = () => import('@/customization/mails')
+const Mails = () => import('@/customization/Mails')
 const SysLogin = () => import('@/customization/Login')
 const SysRegister = () => import('@/customization/Register')
 

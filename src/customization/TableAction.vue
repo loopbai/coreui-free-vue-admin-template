@@ -1,0 +1,135 @@
+<template>
+  <b-card :header="tableHeader">
+    <b-table
+      :dark="dark"
+      :hover="hover"
+      :striped="striped"
+      :bordered="bordered"
+      :small="small"
+      :fixed="fixed"
+      :items="items"
+      responsive="sm"
+      :fields="column"
+      :current-page="currentPage"
+      :per-page="perPage"
+    >
+      <template slot="status" slot-scope="data">
+        <b-badge :variant="getBadge(data.item.status)">{{data.item.status}}</b-badge>
+      </template>
+
+      <div slot="actions" slot-scope="data">
+        <b-button
+          variant="primary"
+          class="btn-pill"
+          size="sm"
+          @click="onActionClicked('edit-item', data.item)"
+        >Ddit</b-button>
+        <b-button
+          variant="danger"
+          class="btn-pill"
+          size="sm"
+          @click="onActionClicked('delete-item', data.item)"
+        >Delete</b-button>
+      </div>
+    </b-table>
+    <nav>
+      <b-pagination
+        :total-rows="totalRows"
+        :per-page="perPage"
+        v-model="currentPage"
+        prev-text="Prev"
+        next-text="Next"
+        hide-goto-end-buttons
+      />
+    </nav>
+  </b-card>
+</template>
+
+<script>
+export default {
+  name: "c-table-actions",
+  inheritAttrs: false,
+  props: {
+    tableHeader: {
+      type: String,
+      default: "Table"
+    },
+    hover: {
+      type: Boolean,
+      default: false
+    },
+    striped: {
+      type: Boolean,
+      default: false
+    },
+    bordered: {
+      type: Boolean,
+      default: false
+    },
+    small: {
+      type: Boolean,
+      default: false
+    },
+    fixed: {
+      type: Boolean,
+      default: false
+    },
+    tableData: {
+      type: [Array, Function],
+      default: () => []
+    },
+    tableColumn: {
+      type: [Array, Function],
+      default: () => []
+    },
+    fields: {
+      type: [Array, Object],
+      default: () => []
+    },
+    perPage: {
+      type: Number,
+      default: 5
+    },
+    dark: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data: () => {
+    return {
+      currentPage: 1
+    };
+  },
+  computed: {
+    items: function() {
+      const items = this.tableData;
+      return Array.isArray(items) ? items : items();
+    },
+    totalRows: function() {
+      return this.getRowCount();
+    },
+    column: function() {
+      return this.tableColumn
+    }
+  },
+  methods: {
+    getBadge(status) {
+      return status === "Active"
+        ? "success"
+        : status === "Inactive"
+        ? "secondary"
+        : status === "Pending"
+        ? "warning"
+        : status === "Banned"
+        ? "danger"
+        : "primary";
+    },
+    getRowCount: function() {
+      return this.items.length;
+    },
+    onActionClicked: function(action, data) {
+      console.log(action, data)
+    }
+  }
+};
+</script>
