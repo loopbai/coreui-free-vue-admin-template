@@ -29,7 +29,7 @@ export default {
     return {
       tableHeader: "Mail List",
       itemsArray: [],
-      tableColumn: ["owner_name", "owner_e_name", "name", "org_name", "actions"]
+      tableColumn: ["user_name", "mail_name", "org_name", "is_active", "actions"]
     };
   },
   created() {
