@@ -13,10 +13,6 @@
       :current-page="currentPage"
       :per-page="perPage"
     >
-      <template slot="status" slot-scope="data">
-        <b-badge :variant="getBadge(data.item.status)">{{data.item.status}}</b-badge>
-      </template>
-
       <div slot="actions" slot-scope="data">
         <b-button
           variant="primary"
@@ -113,17 +109,6 @@ export default {
     }
   },
   methods: {
-    getBadge(status) {
-      return status === "Active"
-        ? "success"
-        : status === "Inactive"
-        ? "secondary"
-        : status === "Pending"
-        ? "warning"
-        : status === "Banned"
-        ? "danger"
-        : "primary";
-    },
     getRowCount: function() {
       return this.items.length;
     },
