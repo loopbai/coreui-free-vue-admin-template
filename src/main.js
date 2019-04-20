@@ -9,6 +9,7 @@ import BootstrapVue from 'bootstrap-vue'
 import axios from 'axios'
 import VueCookie from 'vue-cookie'
 import VueAxios from 'vue-axios'
+import VueX from 'vuex'
 import App from './App'
 import router from './router'
 
@@ -18,6 +19,18 @@ import router from './router'
 Vue.use(BootstrapVue)
 Vue.use(VueCookie)
 Vue.use(VueAxios, axios)
+Vue.use(VueX)
+
+const store = new VueX.Store({
+  state: {
+      mails: []
+  },
+  mutations: {
+      setMails(state, mails){
+        state.mails = mails
+      }
+  }
+})
 
 Vue.prototype.$apiRequest = axios.create({
   baseURL: process.env.VUE_APP_API_GATEWAY
@@ -31,6 +44,7 @@ if (token) {
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: {
     App

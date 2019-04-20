@@ -5,7 +5,6 @@
         <c-table-action
           :table-header="tableHeader"
           :table-column="tableColumn"
-          :table-data="itemsArray"
           :per-page="10"
           hover
           striped
@@ -28,7 +27,6 @@ export default {
   data: () => {
     return {
       tableHeader: "Mail List",
-      itemsArray: [],
       tableColumn: ["user_name", "mail_name", "org_name", "is_active", "actions"]
     };
   },
@@ -36,18 +34,7 @@ export default {
     this.$apiRequest
       .get("api/v1/mail")
       .then(response => {
-        let maillist = new Array();
-        response.data.forEach(element => {
-          maillist.push({
-            owner_name: element.owner_name,
-            owner_e_name: element.owner_e_name,
-            name: element.name,
-            org_name: element.org_name,
-            desc: element.desc
-          });
-        });
-        //this.itemsArray = maillist;
-        this.itemsArray = response.data;
+        this.$store.commit('setMails', response.data)
       })
       .catch(error => {
         if (error.response.status === 401) {

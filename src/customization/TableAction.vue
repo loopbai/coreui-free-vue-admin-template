@@ -70,10 +70,6 @@ export default {
       type: Boolean,
       default: false
     },
-    tableData: {
-      type: [Array, Function],
-      default: () => []
-    },
     tableColumn: {
       type: [Array, Function],
       default: () => []
@@ -98,14 +94,14 @@ export default {
   },
   computed: {
     items: function() {
-      const items = this.tableData;
+      const items = this.$store.state.mails;
       return Array.isArray(items) ? items : items();
     },
     totalRows: function() {
       return this.getRowCount();
     },
     column: function() {
-      return this.tableColumn
+      return this.tableColumn;
     }
   },
   methods: {
@@ -113,7 +109,8 @@ export default {
       return this.items.length;
     },
     onActionClicked: function(action, data) {
-      console.log(action, data)
+      let mails = this.$store.state.mails.filter((item) => (item.id !== data.id));
+      this.$store.commit("setMails", mails);
     }
   }
 };
