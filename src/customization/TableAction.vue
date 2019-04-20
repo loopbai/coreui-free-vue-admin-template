@@ -1,44 +1,54 @@
 <template>
-  <b-card :header="tableHeader">
-    <b-table
-      :dark="dark"
-      :hover="hover"
-      :striped="striped"
-      :bordered="bordered"
-      :small="small"
-      :fixed="fixed"
-      :items="items"
-      responsive="sm"
-      :fields="column"
-      :current-page="currentPage"
-      :per-page="perPage"
-    >
-      <div slot="actions" slot-scope="data">
-        <b-button
-          variant="primary"
-          class="btn-pill"
-          size="sm"
-          @click="onActionClicked('edit-item', data.item)"
-        >Ddit</b-button>
-        <b-button
-          variant="danger"
-          class="btn-pill"
-          size="sm"
-          @click="onActionClicked('delete-item', data.item)"
-        >Delete</b-button>
-      </div>
-    </b-table>
-    <nav>
-      <b-pagination
-        :total-rows="totalRows"
+  <div>
+    <b-card :header="tableHeader">
+      <b-table
+        :dark="dark"
+        :hover="hover"
+        :striped="striped"
+        :bordered="bordered"
+        :small="small"
+        :fixed="fixed"
+        :items="items"
+        responsive="sm"
+        :fields="column"
+        :current-page="currentPage"
         :per-page="perPage"
-        v-model="currentPage"
-        prev-text="Prev"
-        next-text="Next"
-        hide-goto-end-buttons
-      />
-    </nav>
-  </b-card>
+      >
+        <div slot="actions" slot-scope="data">
+          <b-button
+            variant="primary"
+            class="btn-pill"
+            size="sm"
+            @click="onActionClicked('edit-item', data.item)"
+          >Ddit</b-button>
+          <b-button
+            variant="danger"
+            class="btn-pill"
+            size="sm"
+            @click="onActionClicked('delete-item', data.item)"
+          >Delete</b-button>
+        </div>
+      </b-table>
+      <nav>
+        <b-pagination
+          :total-rows="totalRows"
+          :per-page="perPage"
+          v-model="currentPage"
+          prev-text="Prev"
+          next-text="Next"
+          hide-goto-end-buttons
+        />
+      </nav>
+    </b-card>
+
+    <b-modal
+      title="Danger"
+      class="modal-danger"
+      v-model="dangerModal"
+      @ok="dangerModal = false"
+      ok-variant="danger"
+    >Are you sure delete it.</b-modal>
+  </div>
 </template>
 
 <script>
@@ -89,6 +99,7 @@ export default {
   },
   data: () => {
     return {
+      dangerModal: false,
       currentPage: 1
     };
   },
@@ -109,8 +120,19 @@ export default {
       return this.items.length;
     },
     onActionClicked: function(action, data) {
-      let mails = this.$store.state.mails.filter((item) => (item.id !== data.id));
-      this.$store.commit("setMails", mails);
+      let r = confirm("Are you sure delete it ?");
+      if (r == true) {
+
+        this.$apiRequest
+          .delete("api/v1/mail/" + data.id)
+          .then(() => {
+            let mails = this.$store.state.mails.filter(item => item.id !== data.id);
+            this.$store.commit("setMails", mails);
+          })
+          .catch(error => {
+            console.log(error.response.data);
+          });
+      }
     }
   }
 };

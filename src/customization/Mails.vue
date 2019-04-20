@@ -37,8 +37,8 @@ export default {
         this.$store.commit('setMails', response.data)
       })
       .catch(error => {
+        console.log(error.response.data);
         if (error.response.status === 401) {
-          console.log(error.response.data);
           router.push({ path: "system/login" });
         }
       });
