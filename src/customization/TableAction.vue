@@ -20,7 +20,7 @@
             class="btn-pill"
             size="sm"
             @click="onActionClicked('edit-item', data.item)"
-          >Ddit</b-button>
+          >Edit</b-button>
           <b-button
             variant="danger"
             class="btn-pill"
