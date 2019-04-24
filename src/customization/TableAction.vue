@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import router from "../router";
+
 export default {
   name: "c-table-actions",
   inheritAttrs: false,
@@ -120,19 +122,24 @@ export default {
       return this.items.length;
     },
     onActionClicked: function(action, data) {
-      let r = confirm("Are you sure delete it ?");
-      if (r == true) {
-
-        this.$apiRequest
-          .delete("api/v1/mail/" + data.id)
-          .then(() => {
-            let mails = this.$store.state.mails.filter(item => item.id !== data.id);
-            this.$store.commit("setMails", mails);
-          })
-          .catch(error => {
-            console.log(error.response.data);
-          });
+      if (action === 'edit-item') {
+        router.push({ path: "mail/" + data.id });
       }
+      if (action === 'delete-item') {
+        let r = confirm("Are you sure delete it ?");
+        if (r == true) {
+          this.$apiRequest
+            .delete("api/v1/mail/" + data.id)
+            .then(() => {
+              let mails = this.$store.state.mails.filter(item => item.id !== data.id);
+              this.$store.commit("setMails", mails);
+            })
+            .catch(error => {
+              console.log(error.response.data);
+            });
+        }
+      }
+
     }
   }
 };

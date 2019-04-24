@@ -60,6 +60,7 @@ const User = () => import('@/views/users/User')
 
 // System
 const Mails = () => import('@/customization/Mails')
+const Mail = () => import('@/customization/Mail')
 const SysLogin = () => import('@/customization/Login')
 const SysRegister = () => import('@/customization/Register')
 
@@ -81,6 +82,12 @@ export default new Router({
           name: 'Mails',
           component: Mails
         },
+        {
+          path: 'mail/:id',
+          name: 'Mail',
+          component: Mail
+        },
+
         {
           path: 'dashboard',
           name: 'Dashboard',
