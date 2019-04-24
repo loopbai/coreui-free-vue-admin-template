@@ -1,9 +1,12 @@
 <template>
   <div>
     <b-card :header="tableHeader">
-
-
-      <b-button style="margin-bottom:10px">Add</b-button>
+      <b-button
+        style="margin-bottom:10px"
+        variant="secondary"
+        class="btn-pill"
+        @click="onCreateClicked()"
+      >Add</b-button>
 
       <b-table
         :dark="dark"
@@ -125,17 +128,22 @@ export default {
     getRowCount: function() {
       return this.items.length;
     },
+    onCreateClicked: function() {
+      router.push({ path: "/mail/create" });
+    },
     onActionClicked: function(action, data) {
-      if (action === 'edit-item') {
-        router.push({ path: "mail/" + data.id });
+      if (action === "edit-item") {
+        router.push({ path: "/mail/" + data.id });
       }
-      if (action === 'delete-item') {
+      if (action === "delete-item") {
         let r = confirm("Are you sure delete it ?");
         if (r == true) {
           this.$apiRequest
             .delete("api/v1/mail/" + data.id)
             .then(() => {
-              let mails = this.$store.state.mails.filter(item => item.id !== data.id);
+              let mails = this.$store.state.mails.filter(
+                item => item.id !== data.id
+              );
               this.$store.commit("setMails", mails);
             })
             .catch(error => {
@@ -143,7 +151,6 @@ export default {
             });
         }
       }
-
     }
   }
 };

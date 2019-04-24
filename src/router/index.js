@@ -60,7 +60,8 @@ const User = () => import('@/views/users/User')
 
 // System
 const Mails = () => import('@/customization/Mails')
-const Mail = () => import('@/customization/Mail')
+const MailAdd = () => import('@/customization/MailAdd')
+const MailEdit   = () => import('@/customization/MailEdit')
 const SysLogin = () => import('@/customization/Login')
 const SysRegister = () => import('@/customization/Register')
 
@@ -83,9 +84,15 @@ export default new Router({
           component: Mails
         },
         {
+          path: 'mail/create',
+          name: 'Mail-create',
+          component: MailAdd
+        },
+        // 有參數需最後匹配
+        {
           path: 'mail/:id',
-          name: 'Mail',
-          component: Mail
+          name: 'Mail-edit',
+          component: MailEdit
         },
 
         {

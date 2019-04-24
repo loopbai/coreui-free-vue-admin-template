@@ -4,7 +4,7 @@
       <b-col sm="12">
         <b-card>
           <div slot="header">
-            <strong>Basic Form</strong> Elements
+            <strong>Basic Form</strong> Create
           </div>
           <b-form>
             <b-form-group
@@ -12,7 +12,6 @@
               label="用戶名稱"
               label-for="userName"
               :label-cols="3"
-              :horizontal="true"
             >
               <b-form-input id="userName" type="text" autocomplete="name" v-model="userName"></b-form-input>
             </b-form-group>
@@ -22,12 +21,11 @@
               label="信箱名稱"
               label-for="mailName"
               :label-cols="3"
-              :horizontal="true"
             >
               <b-form-input id="mailName" type="text" autocomplete="name" v-model="mailName"></b-form-input>
             </b-form-group>
 
-            <b-form-group label="組織" label-for="org" :label-cols="3" :horizontal="true">
+            <b-form-group label="組織" label-for="org" :label-cols="3">
               <b-form-select
                 id="org"
                 :plain="true"
@@ -36,7 +34,7 @@
               ></b-form-select>
             </b-form-group>
 
-            <b-form-group label="有效" label-for="is_active" :label-cols="3" :horizontal="true">
+            <b-form-group label="有效" label-for="is_active" :label-cols="3">
               <b-form-select
                 id="is_active"
                 :plain="true"
@@ -49,15 +47,14 @@
               label="備註"
               label-for="desc"
               :label-cols="3"
-              :horizontal="true"
             >
               <b-textarea id="desc" :textarea="true" :rows="3" placeholder="Content.." v-model="desc"></b-textarea>
             </b-form-group>
 
-            <b-form-group label="建立時間" label-for="created_at" :label-cols="3" :horizontal="true">
+            <b-form-group label="建立時間" label-for="created_at" :label-cols="3" >
               <b-form-input plaintext id="created_at" type="text" :value="createdAt"></b-form-input>
             </b-form-group>
-            <b-form-group label="更新時間" label-for="updated_at" :label-cols="3" :horizontal="true">
+            <b-form-group label="更新時間" label-for="updated_at" :label-cols="3" >
               <b-form-input plaintext id="updated_at" type="text" :value="updatedAt"></b-form-input>
             </b-form-group>
 
@@ -107,7 +104,7 @@ const form = new VueX.Store({
 })
 
 export default {
-  name: "Mail",
+  name: "Mail-Add",
   components: {},
   data: () => {
     return {
@@ -176,32 +173,19 @@ export default {
           router.push({ path: "system/login" });
         }
       });
-
-    // get mail info
-    let id = this.$route.params.id
-    this.$apiRequest
-      .get("api/v1/mail/" + id)
-      .then(response => {
-        form.commit('setMail', response.data)
-      })
-      .catch(error => {
-        console.log(error.response.data);
-        if (error.response.status === 401) {
-          router.push({ path: "system/login" });
-        }
-      });
-
   },
   methods: {
     onSubmitClicked: function() {
       let data = form.state.mail
       this.$apiRequest
-        .put("api/v1/mail/" + data.id, data)
+        .post("api/v1/mail", data)
         .then(() => {
           alert('Success!')
+          router.push({ path: "/mails" })
         })
         .catch(error => {
           console.log(error.response.data);
+          alert(error.response.data)
         });
     },
   }
