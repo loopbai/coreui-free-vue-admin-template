@@ -1,6 +1,10 @@
 <template>
   <div>
     <b-card :header="tableHeader">
+
+
+      <b-button style="margin-bottom:10px">Add</b-button>
+
       <b-table
         :dark="dark"
         :hover="hover"
